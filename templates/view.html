@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ephemeral Drop — Secret Message</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">// EPHEMERAL DROP</div>
+      <div class="tagline">This message was intended for you.</div>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+      <div class="card-title">_ Decrypted Message</div>
+
+      <!-- Destroy warning -->
+      <div class="destroy-warning" id="destroyMsg">
+        <div class="pulse-dot"></div>
+        Message destroyed from server. This is your only copy.
+      </div>
+
+      <!-- Message content -->
+      <div class="message-content">{{ content }}</div>
+
+      <!-- Footer actions -->
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <span style="font-size:11px; color:var(--text-dim);">
+          This page will not reload with this message again.
+        </span>
+        <a href="/" class="back-link">+ Create your own</a>
+      </div>
+
+    </div><!-- /card -->
+
+    <div class="footer">Message deleted on access. Zero copies remain.</div>
+
+  </div><!-- /wrapper -->
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

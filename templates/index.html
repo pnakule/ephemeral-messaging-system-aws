@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ephemeral Drop — Create Message</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">Ephemeral Drop</div>
+      <div class="tagline">Share a message that can be viewed only once.</div>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+
+      <!-- Error (shown only when Flask passes one) -->
+      {% if error %}
+        <div class="error-msg">! {{ error }}</div>
+      {% endif %}
+
+      <!-- Create form -->
+      {% if not link %}
+        <form method="POST" action="/create">
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Type your secret message here..."
+            maxlength="1000"
+            required
+          ></textarea>
+
+          <div class="char-counter">
+            <span id="charCount">0 / 1000</span>
+          </div>
+
+          <div class="btn-row">
+            <span class="warning-note">Link expires after first view.</span>
+            <button type="submit" class="btn">
+              Generate Link →
+            </button>
+          </div>
+        </form>
+      {% endif %}
+
+      <!-- Success: show generated link -->
+      {% if link %}
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:4px;">
+          Once opened, the message will be permanently deleted.
+        </p>
+
+        <div class="link-box">
+          <div class="link-label">Your Secret Link</div>
+          <div class="link-value" id="generatedLink">{{ link }}</div>
+          <button class="copy-btn" id="copyBtn" onclick="copyLink()">
+            COPY LINK
+          </button>
+          <div class="link-note">
+            Expires after one view.
+          </div>
+        </div>
+
+        <div style="margin-top:20px;">
+          <a href="/" style="font-size:11px; color:var(--text-dim); text-decoration:none;
+             letter-spacing:0.1em; text-transform:uppercase;">
+            + Create Another Message
+          </a>
+        </div>
+      {% endif %}
+
+    </div><!-- /card -->
+
+    <div class="footer">Messages are deleted from database after first read.</div>
+
+  </div><!-- /wrapper -->
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
