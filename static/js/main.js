@@ -11,33 +11,48 @@ if (textarea && counter) {
   });
 }
 
-// ── Copy Link to Clipboard ─────────────────────────────────────────────────
+// ── Copy Link to Clipboard (FIXED) ─────────────────────────────────────────
 function copyLink() {
   const linkEl  = document.getElementById("generatedLink");
   const copyBtn = document.getElementById("copyBtn");
 
   if (!linkEl || !copyBtn) return;
 
-  navigator.clipboard.writeText(linkEl.textContent.trim())
-    .then(() => {
-      copyBtn.textContent = "COPIED!";
-      setTimeout(() => { copyBtn.textContent = "COPY LINK"; }, 2000);
-    })
-    .catch(() => {
-      // fallback for older browsers
-      const range = document.createRange();
-      range.selectNode(linkEl);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      document.execCommand("copy");
-      copyBtn.textContent = "COPIED!";
-      setTimeout(() => { copyBtn.textContent = "COPY LINK"; }, 2000);
-    });
+  const text = linkEl.textContent.trim();
+
+  // Use modern clipboard only if available AND secure (HTTPS)
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        copyBtn.textContent = "COPIED!";
+        setTimeout(() => { copyBtn.textContent = "COPY LINK"; }, 2000);
+      })
+      .catch(() => fallbackCopy(text, linkEl, copyBtn));
+  } else {
+    fallbackCopy(text, linkEl, copyBtn);
+  }
+}
+
+// Fallback method (works on HTTP)
+function fallbackCopy(text, linkEl, copyBtn) {
+  const range = document.createRange();
+  range.selectNode(linkEl);
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(range);
+
+  try {
+    document.execCommand("copy");
+    copyBtn.textContent = "COPIED!";
+  } catch (err) {
+    copyBtn.textContent = "FAILED";
+  }
+
+  setTimeout(() => { copyBtn.textContent = "COPY LINK"; }, 2000);
 }
 
 // ── Countdown Timer (view page) ────────────────────────────────────────────
-// Shows user a "this message was just destroyed" feel after reading
 const destroyMsg = document.getElementById("destroyMsg");
+
 if (destroyMsg) {
   let secs = 5;
   const interval = setInterval(() => {
