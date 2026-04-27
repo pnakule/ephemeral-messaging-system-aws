@@ -1,4 +1,4 @@
-# EphemeralDrop – AWS-Based Ephemeral Messaging System
+## EphemeralDrop – AWS-Based Ephemeral Messaging System
 
 ## Overview
 
