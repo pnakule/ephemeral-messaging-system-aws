@@ -12,7 +12,9 @@
 
     <div class="header">
       <div class="logo">Ephemeral<span>Drop</span></div>
-      <div class="tagline">Create a secret message. Share the link. It disappears after one view.</div>
+      <div class="tagline">
+        Create a secret message. Share the link. It disappears after one view or 24 hours.
+      </div>
     </div>
 
     <div class="card">
@@ -38,7 +40,9 @@
         </div>
 
         <div class="btn-row">
-          <span class="warning-note">Link works only once.</span>
+          <span class="warning-note">
+            Link works only once and expires after 24 hours.
+          </span>
           <button type="submit" class="btn">Generate Link</button>
         </div>
       </form>
@@ -53,7 +57,7 @@
         <button type="button" class="copy-btn" id="copyBtn" onclick="copyLink()">Copy Link</button>
 
         <div class="link-note">
-          Once someone opens this link, the message is permanently deleted from the database.
+          This link will expire after 24 hours or once it has been viewed.
         </div>
 
         <div class="btn-row" style="margin-top: 15px;">
@@ -64,7 +68,9 @@
 
     </div>
 
-    <div class="footer">Messages are deleted immediately after first view.</div>
+    <div class="footer">
+      Messages are deleted after first view or automatically after 24 hours.
+    </div>
 
   </div>
 
