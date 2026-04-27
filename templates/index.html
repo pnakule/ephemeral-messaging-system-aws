@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EphemeralDrop</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <div class="header">
+      <div class="logo">Ephemeral<span>Drop</span></div>
+      <div class="tagline">Create a secret message. Share the link. It disappears after one view.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">New Message</div>
+
+      {% if error %}
+        <div class="error-msg">{{ error }}</div>
+      {% endif %}
+
+      <!-- FORM (shown only before link is generated) -->
+      {% if not link %}
+      <form method="POST" action="/create">
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Type your secret message here..."
+          maxlength="1000"
+          required
+        ></textarea>
+
+        <div class="char-counter">
+          <span id="charCount">0 / 1000</span>
+        </div>
+
+        <div class="btn-row">
+          <span class="warning-note">Link works only once.</span>
+          <button type="submit" class="btn">Generate Link</button>
+        </div>
+      </form>
+      {% endif %}
+
+      <!-- LINK RESULT (shown only after generation) -->
+      {% if link %}
+      <div class="link-box">
+        <div class="link-label">Your Secret Link</div>
+        <div class="link-value" id="generatedLink">{{ link }}</div>
+
+        <button type="button" class="copy-btn" id="copyBtn" onclick="copyLink()">Copy Link</button>
+
+        <div class="link-note">
+          Once someone opens this link, the message is permanently deleted from the database.
+        </div>
+
+        <div class="btn-row" style="margin-top: 15px;">
+          <a href="/" class="btn">Create Another</a>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <div class="footer">Messages are deleted immediately after first view.</div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

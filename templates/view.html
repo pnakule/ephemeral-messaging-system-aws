@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EphemeralDrop</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <div class="header">
+      <div class="logo">Ephemeral<span>Drop</span></div>
+      <div class="tagline">This message was meant for you.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Secret Message</div>
+
+      <div class="destroy-warning">
+        <div class="pulse-dot"></div>
+        This message has been deleted from the server. You are seeing it for the last time.
+      </div>
+
+      <div class="view-label">Message</div>
+      <div class="message-content">{{ content }}</div>
+
+      <div class="view-bottom">
+        <span class="view-note">Refreshing this page will not show the message again.</span>
+        <a href="/" class="back-link">Create your own →</a>
+      </div>
+
+    </div>
+
+    <div class="footer">Message permanently deleted.</div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

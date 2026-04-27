@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EphemeralDrop — Link Expired</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <div class="header">
+      <div class="logo">Ephemeral<span>Drop</span></div>
+    </div>
+
+    <div class="card expired-card">
+      <span class="expired-icon">🔒</span>
+      <div class="expired-title">Message Not Found</div>
+      <div class="expired-desc">
+        This link has already been opened or does not exist.<br />
+        The message has been permanently deleted.
+      </div>
+      <a href="/" class="back-link">← Create a new message</a>
+    </div>
+
+    <div class="footer">Links are single-use only and cannot be recovered.</div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
