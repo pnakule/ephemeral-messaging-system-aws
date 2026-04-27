@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, jsonify
 import mysql.connector
 import uuid
+from datetime import datetime, timedelta
 from config import DB_CONFIG
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ def init_db():
             id VARCHAR(36) PRIMARY KEY,
             content TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            expires_at TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL 24 HOUR),
             is_viewed BOOLEAN DEFAULT FALSE
         )
     """)
@@ -45,11 +47,14 @@ def create_message():
 
     message_id = str(uuid.uuid4())
 
+    # Set expiry manually (24 hours)
+    expires_at = datetime.utcnow() + timedelta(hours=24)
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO messages (id, content) VALUES (%s, %s)",
-        (message_id, content)
+        "INSERT INTO messages (id, content, expires_at) VALUES (%s, %s, %s)",
+        (message_id, content, expires_at)
     )
     conn.commit()
     cursor.close()
@@ -64,8 +69,14 @@ def view_message(message_id):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
+    # Check: not viewed + not expired
     cursor.execute(
-        "SELECT * FROM messages WHERE id = %s AND is_viewed = FALSE",
+        """
+        SELECT * FROM messages 
+        WHERE id = %s 
+        AND is_viewed = FALSE 
+        AND expires_at > NOW()
+        """,
         (message_id,)
     )
     message = cursor.fetchone()
