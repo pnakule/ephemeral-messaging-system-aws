@@ -1,19 +1,12 @@
 import os
 
-# ---------------------------------------------------------------------------
-# Database configuration
-# On AWS EC2, set these as environment variables instead of hardcoding.
-# Example:
-#   export DB_HOST="your-rds-endpoint.rds.amazonaws.com"
-#   export DB_USER="admin"
-#   export DB_PASSWORD="yourpassword"
-#   export DB_NAME="ephemeral_db"
-# ---------------------------------------------------------------------------
+# On AWS EC2 set these as environment variables.
+# Locally you can change the defaults below for testing.
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "appuser",
-    "password": "app123",
-    "database": "ephemeral_db",
-    "port": 3306,
+    "host":     os.environ.get("DB_HOST",     "localhost"),
+    "user":     os.environ.get("DB_USER",     "appuser"),
+    "password": os.environ.get("DB_PASSWORD", ""),
+    "database": os.environ.get("DB_NAME",     "ephemeral_db"),
+    "port":     int(os.environ.get("DB_PORT", 3306)),
 }
