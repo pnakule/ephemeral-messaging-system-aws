@@ -1,20 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify
 import mysql.connector
 import uuid
-import os
 from config import DB_CONFIG
 
 app = Flask(__name__)
 
 
+# ── Database ──────────────────────────────────────────────────────────────────
 def get_db_connection():
-    """Create and return a database connection."""
-    conn = mysql.connector.connect(**DB_CONFIG)
-    return conn
+    return mysql.connector.connect(**DB_CONFIG)
 
 
 def init_db():
-    """Create the messages table if it doesn't exist."""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -30,15 +27,14 @@ def init_db():
     conn.close()
 
 
+# ── Routes ────────────────────────────────────────────────────────────────────
 @app.route("/")
 def index():
-    """Home page - create a new message."""
     return render_template("index.html")
 
 
 @app.route("/create", methods=["POST"])
 def create_message():
-    """Handle message creation, save to DB, return unique link."""
     content = request.form.get("message", "").strip()
 
     if not content:
@@ -65,11 +61,9 @@ def create_message():
 
 @app.route("/view/<message_id>")
 def view_message(message_id):
-    """Show the message once, then delete it from DB."""
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Fetch message
     cursor.execute(
         "SELECT * FROM messages WHERE id = %s AND is_viewed = FALSE",
         (message_id,)
@@ -81,7 +75,7 @@ def view_message(message_id):
         conn.close()
         return render_template("expired.html")
 
-    # Mark as viewed, then delete
+    # Delete after viewing (one-time access)
     cursor.execute("DELETE FROM messages WHERE id = %s", (message_id,))
     conn.commit()
     cursor.close()
@@ -92,7 +86,6 @@ def view_message(message_id):
 
 @app.route("/health")
 def health():
-    """Health check endpoint for ALB target group."""
     try:
         conn = get_db_connection()
         conn.close()
