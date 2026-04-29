@@ -1,3 +1,4 @@
+from flask import request, abort
 from flask import Flask, render_template, request, url_for, jsonify
 import mysql.connector
 import uuid
@@ -5,6 +6,10 @@ from datetime import datetime, timedelta
 from config import DB_CONFIG
 
 app = Flask(__name__)
+
+@app.before_request
+def restrict_access():
+    if request.headers.get("P-Origin-Verify") != "Ephemeral"
 
 
 # ── Database ──────────────────────────────────────────────────────────────────
