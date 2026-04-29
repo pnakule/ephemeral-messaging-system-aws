@@ -4,7 +4,6 @@ const counter  = document.getElementById("charCount");
 const MAX      = 1000;
 
 if (textarea && counter) {
-  // Initialize on page load
   counter.textContent = `0 / ${MAX}`;
 
   textarea.addEventListener("input", () => {
@@ -21,29 +20,40 @@ function copyLink() {
 
   if (!linkEl || !copyBtn) return;
 
-  const text = linkEl.textContent.trim();
+  // Works for both input and text elements
+  const text = linkEl.value || linkEl.textContent.trim();
 
-  navigator.clipboard.writeText(text)
-    .then(() => {
-      showCopied(copyBtn);
-    })
-    .catch(() => {
-      // Fallback for older browsers
-      const range = document.createRange();
-      range.selectNode(linkEl);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-      document.execCommand("copy");
-      window.getSelection().removeAllRanges();
+  if (!text) return;
 
-      showCopied(copyBtn);
-    });
+  // Modern method
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text)
+      .then(() => showCopied(copyBtn))
+      .catch(() => fallbackCopy(text, copyBtn));
+  } else {
+    // Fallback if clipboard API not available
+    fallbackCopy(text, copyBtn);
+  }
+}
+
+// ── Fallback Copy (reliable) ──────────────────────────────────
+function fallbackCopy(text, btn) {
+  const tempInput = document.createElement("input");
+  tempInput.value = text;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  tempInput.setSelectionRange(0, 99999); // mobile support
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+
+  showCopied(btn);
 }
 
 // ── Helper ────────────────────────────────────────────────────
 function showCopied(btn) {
+  const original = btn.textContent;
   btn.textContent = "Copied!";
   setTimeout(() => {
-    btn.textContent = "Copy Link";
+    btn.textContent = original;
   }, 2000);
 }
