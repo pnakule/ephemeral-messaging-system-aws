@@ -56,4 +56,5 @@ function showCopied(btn) {
   setTimeout(() => {
     btn.textContent = original;
   }, 2000);
+}}, 2000);
 }
