@@ -1,162 +1,174 @@
-## EphemeralDrop – AWS-Based Ephemeral Messaging System
+# Ephemeral Messaging System on AWS
 
 ## Overview
 
-EphemeralDrop is a simple web application where users can create a secret message and share it through a link.
-The message can be viewed only once or expires after 24 hours.
-
-This project focuses on running infrastructure only when needed to reduce cost.
+This project is a simple web application that allows users to create messages that can be viewed once and then expire. The system is designed using AWS services with a focus on secure architecture, controlled access, and basic automation.
 
 ---
 
-## 🎯 Objective
+## Architecture Summary
 
-* Reduce cloud cost by stopping resources when not in use
-* Automate infrastructure using scheduled events
-* Build a secure setup without exposing backend services
+The application follows a layered architecture:
 
----
-
-## Architecture (Flow)
-
-```text
-User → Route 53 → CloudFront → ALB → EC2 → RDS
-```
-
-### Request Flow
-
-1. User accesses www.elevateaws.com
-2. Domain is resolved using Route 53
-3. Request goes to CloudFront
-4. CloudFront forwards traffic to ALB
-5. ALB forwards request to Target Group
-6. Target Group routes traffic to EC2 (Flask app)
-7. Application reads/writes data to RDS
+1. User accesses the application using a domain (`www.elevateaws.com`)
+2. DNS is managed using Route 53
+3. Traffic is routed through CloudFront
+4. CloudFront forwards requests to an Application Load Balancer (ALB)
+5. ALB routes traffic via a Target Group to an EC2 instance
+6. The EC2 instance runs a Flask application (served using Gunicorn)
+7. The application interacts with an RDS (MySQL) database
+8. If the backend is unavailable, CloudFront serves a static offline page from S3
 
 ---
 
-##  Failover (Fallback)
+## Key AWS Services Used
 
-* If EC2 becomes unhealthy
-* CloudFront switches to a secondary origin
-* Secondary origin = S3 bucket (static website [Shows a simple offline page)]
-
----
-
-## Infrastructure Setup
-
-### Network
-
-* 1 VPC with 2 Availability Zones
-
-**AZ-1**
-
-* Public subnet (ALB)
-* Private subnet (EC2 + RDS)
-
-**AZ-2**
-
-* Private subnet (reserved for high availability and future scaling)
+* **Route 53** – Domain routing to CloudFront
+* **CloudFront** – Edge routing and failover (ALB → S3)
+* **Application Load Balancer** – Request routing and health checks
+* **EC2** – Hosts the Flask application
+* **RDS (MySQL)** – Stores application data
+* **S3** – Static offline page (failover)
+* **Lambda** – Controls start/stop of EC2 and RDS
+* **EventBridge** – Schedules automation
+* **Systems Manager (Session Manager)** – Secure EC2 access
+* **Parameter Store** – Stores database credentials
+* **KMS** – Encryption for secrets and storage
+* **IAM** – Role-based access control
 
 ---
 
-### Compute & Database
+## Networking Design
 
-* EC2 runs Flask application
-* RDS stores messages
+* VPC with two Availability Zones
+* Public subnet:
 
-Both are in **private subnet (no public access)**
+  * ALB
+  * NAT Gateway
+* Private subnet:
 
----
+  * EC2
+  * RDS
 
-### Load Balancing
+### Traffic Flow
 
-* ALB handles incoming traffic
-* Uses Target Group to route traffic to EC2
+* **Inbound:**
+  User → CloudFront → ALB → EC2
 
----
+* **Database Access:**
+  EC2 → RDS (private connection)
 
-## 🔐 Security
-
-* EC2 instances are in private subnets (no public access)
-* Access to EC2 is done using Session Manager (no SSH keys required)
-* Database credentials are stored securely in SSM Parameter Store
-* Sensitive data is encrypted using KMS
-
----
-
-## Automation
-
-Used:
-
-* EventBridge
-* Lambda
-
-### Flow
-
-```text
-EventBridge → Lambda → Start/Stop EC2 + RDS
-```
-
-* Two rules:
-
-  * Start resources
-  * Stop resources
-
-* Used UTC-based cron scheduling since EventBridge runs on UTC  
-* Added buffer time to account for RDS startup delay  
+* **Outbound (updates, installs):**
+  EC2 → NAT Gateway → Internet Gateway → Internet
 
 ---
 
-## Application Logic
+## Security Design
 
-* A simple Flask-based app is used to create and view messages
-* Each message is stored with a unique ID and accessed through a link
+* No direct public access to EC2 and RDS
+* Access controlled using Security Groups:
 
-Features:
-
-* Message can be viewed only once
-* It is deleted after being viewed
-* If not opened, it expires after 24 hours
-
----
-
-## 🧩 AWS Services Used
-
-* CloudFront
-* Route 53
-* ALB
-* EC2
-* RDS
-* S3
-* EventBridge
-* Lambda
-* IAM
-* Systems Manager
-* KMS
+  * ALB → EC2 (port 5000)
+  * EC2 → RDS (port 3306)
+* EC2 access via Session Manager (no SSH keys)
+* Secrets stored in Parameter Store (no hardcoding)
+* Encryption enabled using KMS
 
 ---
 
-## Challenges & Fixes
+## Failover Handling
 
-### 1. CloudFront failover was not working initially
-Took some time to understand how origin failover works and how CloudFront decides when to switch to S3.
-### 2. EventBridge and Lambda connection was confusing at first
-I assumed a role was enough, but later understood Lambda needs a separate permission for EventBridge.
-### 3. Delay in startup
-* Issue: App not ready on exact time
-* Fix: Added buffer time
+CloudFront is configured with:
+
+* Primary origin → ALB
+* Failover origin → S3
+
+If the application becomes unhealthy, users are redirected to a static offline page.
 
 ---
 
-## Summary
+## Automation (Cost Optimization)
 
-> Built a cost-aware AWS architecture where EC2 and RDS are automatically started and stopped using EventBridge and Lambda, while keeping the system secure and simple.
+To reduce cost, resources are scheduled:
+
+* EventBridge triggers Lambda functions
+* Lambda performs:
+
+  * Start EC2 and RDS
+  * Stop EC2 and RDS
+
+### Schedule
+
+* Start: 7 PM IST
+* Stop: 8 PM IST
+
+---
+
+## Application Details
+
+* Backend: Flask
+* Server: Gunicorn
+* Database: MySQL (RDS)
+
+### Features
+
+* One-time message viewing
+* Auto-delete after viewing
+* Expiry-based message removal
+
+---
+
+## Challenges Faced
+
+### 1. EventBridge not triggering Lambda
+
+* Issue: Rule created but Lambda not executing
+* Fix: Added correct resource-based permission for EventBridge
+
+---
+
+### 2. Time mismatch in scheduling
+
+* Issue: Incorrect execution time
+* Fix: Adjusted cron expression using UTC
+
+---
+
+### 3. CloudFront failover not working
+
+* Issue: Offline page not served
+* Fix: Configured origin failover with proper 5xx error codes
+
+---
+
+## Current Limitations
+
+* Single EC2 instance (no autoscaling)
+* Single-region deployment
+* Basic monitoring (no advanced alerts)
 
 ---
 
 ## Future Improvements
 
-* Auto Scaling (separate setup)
-* monitoring (CloudWatch alarms)
+* Add Auto Scaling Group
+* Add CloudWatch alarms and monitoring
+* Restrict ALB access to CloudFront only
+* Improve CI/CD pipeline
+
+---
+
+## Conclusion
+
+This project demonstrates a practical AWS architecture with:
+
+* Controlled access using security groups
+* Private networking for backend services
+* Event-driven automation
+* Failover handling using CloudFront
+
+The focus was on understanding how services connect and behave in a real setup rather than building a complex system.
+
+---
+
 
