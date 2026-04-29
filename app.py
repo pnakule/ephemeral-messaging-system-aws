@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.before_request
 def restrict_access():
-    if request.headers.get("P-Origin-Verify") != "Ephemeral"
+    if request.headers.get("P-Origin-Verify") != "Ephemeral":
+        abort(403)
 
 
 # ── Database ──────────────────────────────────────────────────────────────────
