@@ -1,6 +1,6 @@
 # Ephemeral Messaging System on AWS
 
-## Overview
+## Overview (note:Updates are being made to the ephemeral messaging system.)
 
 This project is a simple web application that allows users to create messages that can be viewed once and then expire. The system is designed using AWS services with a focus on secure architecture, controlled access, and basic automation.
 
