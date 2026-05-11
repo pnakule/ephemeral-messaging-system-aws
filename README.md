@@ -6,7 +6,7 @@
 
 
 - Understand how a real web application is deployed and works on AWS from start to end  
-- Learn how scaling, security, HTTPS, failover, and automation work in cloud systems  
+- Learn how scaling, security, HTTPS, failover, and automation work in aws cloud systems  
 - Understand how different AWS services connect and work together  
 - Learn AWS pricing and ways to reduce running cost 
 
