@@ -27,7 +27,7 @@ Users can create secret messages, share links, and messages disappear after one 
 ---
 ## Editable Architecture Diagram
 
-- ephemeral-architecture.svg
+[aws-architecture-diagram.svg](ephemeral-architecture.svg)
 
 ---
 
