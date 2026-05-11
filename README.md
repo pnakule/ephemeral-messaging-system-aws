@@ -25,6 +25,11 @@ Users can create secret messages, share links, and messages disappear after one 
 ![Architecture Diagram](ephemeral-architecture.png)
 
 ---
+## Editable Architecture Diagram
+
+- ephemeral-architecture.svg
+
+---
 
 ## AWS Services Used
 
