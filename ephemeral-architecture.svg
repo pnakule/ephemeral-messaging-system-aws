@@ -1,0 +1,321 @@
+<svg width="1060" height="1270" viewBox="0 0 1060 1270" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', system-ui, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0f4ff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0000001a"/>
+    </filter>
+    <filter id="shadow-sm" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#00000014"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#7B1FA2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#1565C0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-pink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#AD1457" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1L9 5L1 9" fill="none" stroke="#B45309" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1060" height="1210" rx="20" fill="url(#bgGrad)" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- TITLE -->
+  <text x="530" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#1e1b4b">Ephemeral Messaging System — AWS Architecture</text>
+  <text x="530" y="72" text-anchor="middle" font-size="11" fill="#64748b">Secure one-time messaging application with automatic message expiration, HTTPS delivery, automated scaling, and failover architecture on AWS.</text>
+
+  <!-- USER -->
+  <rect x="405" y="90" width="250" height="50" rx="11" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="530" y="112" text-anchor="middle" font-size="13" font-weight="700" fill="#334155">User / Browser</text>
+  <text x="530" y="130" text-anchor="middle" font-size="11" fill="#64748b">www.elevateaws.com  &nbsp; (HTTPS)</text>
+  <line x1="530" y1="140" x2="530" y2="162" stroke="#94a3b8" stroke-width="1.3" marker-end="url(#arr)"/>
+
+  <!-- ROUTE 53 -->
+  <rect x="405" y="162" width="250" height="52" rx="11" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="530" y="184" text-anchor="middle" font-size="13" font-weight="700" fill="#4A148C">Route 53</text>
+  <text x="530" y="202" text-anchor="middle" font-size="11" fill="#7B1FA2">DNS Routing</text>
+<line x1="530" y1="214" x2="530" y2="236" stroke="#7B1FA2" stroke-width="1.3" marker-end="url(#arr-purple)"/>
+
+  <!-- CLOUDFRONT -->
+  <rect x="370" y="235" width="312" height="72" rx="11" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="530" y="258" text-anchor="middle" font-size="13" font-weight="700" fill="#4A148C">CloudFront</text>
+  <text x="530" y="276" text-anchor="middle" font-size="11" fill="#7B1FA2"> Edge  Routing  · HTTPS  ·  Origin Failover </text>
+  <text x="530" y="294" text-anchor="middle" font-size="10" fill="#9C27B0">Primary Origin: ALB  ·  Failover Origin: S3 </text>
+
+
+  <!-- CF → S3 failover arrow -->
+  <path d="M681,272 L764,272" fill="none" stroke="#dc2626" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
+  <text x="720" y="268" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">failover</text>
+
+  <!-- S3 -->
+  <rect x="766" y="235" width="230" height="72" rx="11" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="880" y="260" text-anchor="middle" font-size="13" font-weight="700" fill="#1B5E20">Amazon S3</text>
+    <text x="880" y="276" text-anchor="middle" font-size="11" fill="#2E7D32">Static Offline Page</text>
+  <text x="880" y="290" text-anchor="middle" font-size="11" fill="#2E7D32">Private Bucket via OAC</text>
+
+  <!-- CF → ALB arrow -->
+  <path d="M530,308 L530,361" fill="none" stroke="#7B1FA2" stroke-width="1.3" marker-end="url(#arr-purple)"/>
+
+  <!-- ═══════════════════════════ VPC ════════════════════════════ -->
+  <rect x="30" y="348" width="1000" height="496" rx="16" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="12 6"/>
+  <!-- VPC label -->
+  <rect x="882" y="337" width="96" height="20" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+  <text x="930" y="351" text-anchor="middle" font-size="11" fill="#64748b" font-weight="700">VPC</text>
+  <!-- IGW -->
+  <rect x="30" y="336" width="50" height="24" rx="7" fill="#EDE7F6" stroke="#512DA8" stroke-width="2" filter="url(#shadow-sm)"/>
+  <text x="55" y="352" text-anchor="middle" font-size="11" font-weight="700" fill="#311B92">IGW</text>
+
+  <!-- ── ALB (inside VPC, OUTSIDE AZ boxes) ── -->
+  <rect x="300" y="364" width="450" height="58" rx="10" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="530" y="386" text-anchor="middle" font-size="13" font-weight="700" fill="#4A148C">Application Load Balancer</text>
+  <text x="525" y="404" text-anchor="middle" font-size="11" fill="#7B1FA2">Internet-facing · Multi-AZ · HTTPS Listener (443) → Target Port 8000 · /health check</text>
+  <!-- Target Group badge -->
+  <rect x="145" y="385" width="100" height="16" rx="4" fill="#FEF9C3" stroke="#EAB308" stroke-width="1"/>
+  <text x="195" y="397" text-anchor="middle" font-size="11" fill="#713F12" font-weight="700">Target Group</text>
+
+
+  <!-- ── AZ 1 ── -->
+  <rect x="46" y="434" width="472" height="400" rx="12" fill="none" stroke="#4ADE80" stroke-width="1.5" stroke-dasharray="8 4"/>
+  <rect x="220" y="424" width="140" height="18" rx="5" fill="#f8fafc"/>
+  <text x="290" y="437" text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a">Availability Zone 1</text>
+
+  <!-- ── AZ 2 ── -->
+  <rect x="542" y="434" width="472" height="400" rx="12" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="8 4"/>
+  <rect x="720" y="424" width="140" height="18" rx="5" fill="#f8fafc"/>
+  <text x="790" y="437" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b">Availability Zone 2</text>
+
+  <!-- PUBLIC SUBNET AZ1 -->
+  <rect x="62" y="472" width="440" height="150" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+  <rect x="62" y="456" width="110" height="18" rx="4" fill="#EFF6FF"/>
+  <text x="120" y="469" text-anchor="middle" font-size="10" fill="#3B82F6" font-weight="700">PUBLIC SUBNET</text>
+
+  <!-- PUBLIC SUBNET AZ2 -->
+  <rect x="558" y="472" width="440" height="150" rx="10" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+  <rect x="558" y="456" width="110" height="18" rx="4" fill="#EFF6FF"/>
+  <text x="613" y="469" text-anchor="middle" font-size="10" fill="#3B82F6" font-weight="700">PUBLIC SUBNET</text>
+
+  <!-- ── AUTO SCALING GROUP (spans both public subnets) ── -->
+  <rect x="74" y="495" width="926" height="92" rx="9" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-dasharray="9 5"/>
+  <!-- ASG label tab -->
+  <rect x="74" y="479" width="222" height="17" rx="4" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="82" y="490" font-size="9.5" fill="#92400E" font-weight="700">Auto Scaling Group  ·  Min: 1  Desired: 1  Max: 3</text>
+
+  <!-- EC2 AZ1 -->
+  <rect x="174" y="503" width="218" height="74" rx="10" fill="#FFF3E0" stroke="#F57C00" stroke-width="1.8" filter="url(#shadow-sm)"/>
+  <text x="283" y="526" text-anchor="middle" font-size="13" font-weight="700" fill="#E65100">Amazon EC2</text>
+  <text x="283" y="545" text-anchor="middle" font-size="11" fill="#BF360C">Flask + Gunicorn · Port 8000</text>
+  <rect x="186" y="555" width="194" height="13" rx="4" fill="#DCFCE7" stroke="#4ADE80" stroke-width="1"/>
+  <text x="283" y="564" text-anchor="middle" font-size="9" fill="#166534" font-weight="700">Registered Healthy ✅</text>
+
+  <!-- EC2 AZ2 (ASG scale-out placeholder) -->
+  <rect x="642" y="504" width="250" height="74" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <text x="772" y="525" text-anchor="middle" font-size="13" font-weight="600" fill="#92400E">EC2 Instance</text>
+  <text x="772" y="545" text-anchor="middle" font-size="11" fill="#B45309">Provisioned by ASG on scale-out</text>
+  <text x="772" y="563" text-anchor="middle" font-size="10" fill="#D97706">Same launch template · Flask + Gunicorn</text>
+
+    <!-- ALB → EC2 arrow (routes down into AZ1 EC2) -->
+  <path d="M200,401 L200,475" fill="none" stroke="#7B1FA2" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr-purple)"/>
+
+
+  <!-- PRIVATE SUBNET AZ1 -->
+  <rect x="62" y="670" width="440" height="150" rx="10" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.2"/>
+  <rect x="62" y="670" width="150" height="18" rx="4" fill="#FFF7ED"/>
+  <text x="110" y="681" text-anchor="middle" font-size="10" fill="#B45309" font-weight="700">PRIVATE SUBNET</text>
+
+ <!-- Notes Block -->
+<g id="notes-block" transform="translate(-10,-13)">
+  
+  <!-- Security Group note -->
+  <rect x="82" y="740" width="320" height="90" rx="6"
+        fill="#F1F5F9" stroke="#E2E8F0" stroke-width="0.8"/>
+  <text x="235" y="757" text-anchor="middle" font-size="12" font-weight="700" fill="#0D47A1">Traffic &amp; Security Controls</text>
+    <text x="240" y="773" text-anchor="middle" font-size="10"
+        fill="#64748B"> CloudFront Adds Custom Security Header 
+  </text>
+  <text x="240" y="786" text-anchor="middle" font-size="10"
+        fill="#64748B"> Application Accepts Requests Only from CloudFront
+  </text>
+    <text x="240" y="799" text-anchor="middle" font-size="10"
+        fill="#64748B">  Direct ALB Requests Are Blocked  
+  </text>
+  <text x="240" y="813" text-anchor="middle" font-size="10"
+        fill="#64748B">EC2 Instances Not Publicly Accessible 
+  </text>
+        
+  <text x="240" y="827"
+        text-anchor="middle"
+        font-size="10"
+        fill="#64748B">
+     RDS Accessible Only from Application Layer
+  </text>
+
+</g>
+
+  <!-- PRIVATE SUBNET AZ2 -->
+  <rect x="558" y="670" width="440" height="150" rx="10" fill="#FFF7ED" stroke="#FED7AA" stroke-width="1.2"/>
+  <rect x="558" y="670" width="150" height="18" rx="4" fill="#FFF7ED"/>
+  <text x="604" y="681" text-anchor="middle" font-size="10" fill="#B45309" font-weight="700">PRIVATE SUBNET</text>
+
+  <!-- RDS Group -->
+<g id="rds-box" transform="translate(330,90)">
+  
+  <!-- Background -->
+  <rect x="80" y="617" width="218" height="80" rx="10"
+        fill="#E3F2FD" stroke="#1565C0" stroke-width="1.8"
+        filter="url(#shadow-sm)"/>
+
+  <!-- Title -->
+  <text x="189" y="645"
+        text-anchor="middle"
+        font-size="13"
+        font-weight="700"
+        fill="#0D47A1">
+    Amazon RDS
+  </text>
+
+  <!-- Subtitle -->
+  <text x="189" y="663"
+        text-anchor="middle"
+        font-size="11"
+        fill="#1565C0">
+    MySQL · Single-AZ Deployment
+  </text>
+
+  <!-- Subnet Group -->
+  <rect x="92" y="673" width="194" height="14" rx="4"
+        fill="#BBDEFB" stroke="#1565C0" stroke-width="0.8"/>
+
+  <text x="189" y="683"
+        text-anchor="middle"
+        font-size="9"
+        font-weight="700"
+        fill="#0D47A1">
+    DB Subnet Group · AZ1 &amp; AZ2
+  </text>
+
+</g>
+
+   <!-- EC2 → RDS -->
+<polyline points="392,550 451,550 451,705"
+          fill="none"
+          stroke="#1565C0"
+          stroke-width="1.3"
+          stroke-dasharray="5 4"
+          marker-end="url(#arr-navy)"/>
+  <!-- Grey text label -->
+<!-- Vertical aligned text -->
+<text x="400" y="642"
+      font-size="9"
+      fill="grey"
+      transform="rotate(90 465 630)">
+  Secure Connection (Port 3306)
+</text>
+
+<path d="M300,393 L245,393"
+      fill="none"
+      stroke="#7B1FA2"
+      stroke-width="1.3"
+      stroke-dasharray="5 3"
+      marker-end="url(#arr-purple)" />
+
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- SECURITY & ACCESS SERVICES                                    -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <rect x="30" y="862" width="490" height="256" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <rect x="30" y="850" width="248" height="22" rx="6" fill="#334155"/>
+  <text x="154" y="865" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="700">Security &amp; Access Services</text>
+
+  <!-- IAM -->
+  <rect x="274" y="876" width="230" height="80" rx="10" fill="#FFEBEE" stroke="#C62828" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="389" y="900" text-anchor="middle" font-size="12" font-weight="700" fill="#B71C1C">AWS IAM</text>
+  <text x="389" y="918" text-anchor="middle" font-size="11" fill="#C62828">Roles &amp; Policies · Least Privilege</text>
+  <text x="389" y="936" text-anchor="middle" font-size="10" fill="#C62828">EC2 · Lambda · SSM roles</text>
+  <rect x="282" y="948" width="214" height="5" rx="3" fill="#EF9A9A"/>
+
+<!-- SSM Session Manager -->
+  <rect x="46" y="880" width="214" height="170" rx="10" fill="#E0F7FA" stroke="#00838F" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="153" y="910" text-anchor="middle" font-size="13" font-weight="700" fill="#004D40">Systems Manager</text>
+  
+  <text x="153" y="940" text-anchor="middle" font-size="11" fill="#00838F" font-weight="bold" text-decoration="underline">Session Manager</text>
+  <text x="153" y="958" text-anchor="middle" font-size="10" fill="#00838F">Secure EC2 Access</text>
+  
+  <text x="153" y="990" text-anchor="middle" font-size="11" fill="#00838F" font-weight="bold" text-decoration="underline">Parameter Store</text>
+  <text x="153" y="1008" text-anchor="middle" font-size="11" fill="#00838F">DB Credentials · Flask Secret</text>
+  <text x="153" y="1024" text-anchor="middle" font-size="10" fill="#00838F">Encrypted at rest via KMS</text>
+   <rect x="54" y="1042" width="198" height="5" rx="3" fill="#80DEEA"/>
+
+  <!-- KMS -->
+  <rect x="274" y="970" width="230" height="80" rx="10" fill="#FFEBEE" stroke="#C62828" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="389" y="994" text-anchor="middle" font-size="12" font-weight="700" fill="#B71C1C">AWS KMS</text>
+  <text x="389" y="1012" text-anchor="middle" font-size="11" fill="#C62828">AWS Managed Encryption Keys</text>
+  <text x="389" y="1030" text-anchor="middle" font-size="10" fill="#C62828">Encrypts SSM secrets &amp; RDS storage</text>
+  <rect x="282" y="1042" width="214" height="5" rx="3" fill="#EF9A9A"/>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- COST AUTOMATION                                               -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <rect x="540" y="862" width="490" height="256" rx="14" fill="#FFF0F7" stroke="#AD1457" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <rect x="540" y="850" width="322" height="22" rx="6" fill="#880E4F"/>
+  <text x="701" y="865" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="700">Cost Automation — Scheduled Start / Stop</text>
+
+  <!-- EventBridge Rule 1 -->
+  <rect x="556" y="876" width="210" height="70" rx="10" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="661" y="900" text-anchor="middle" font-size="12" font-weight="700" fill="#880E4F">EventBridge Rule 1</text>
+  <text x="661" y="918" text-anchor="middle" font-size="11" fill="#AD1457">Cron · 7:00 PM IST</text>
+  <text x="661" y="936" text-anchor="middle" font-size="10" fill="#C2185B">  Scheduled Start</text>
+
+  <!-- EventBridge Rule 2 -->
+  <rect x="804" y="876" width="210" height="70" rx="10" fill="#FCE4EC" stroke="#AD1457" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="909" y="900" text-anchor="middle" font-size="12" font-weight="700" fill="#880E4F">EventBridge Rule 2</text>
+  <text x="909" y="918" text-anchor="middle" font-size="11" fill="#AD1457">Cron · 8:00 PM IST</text>
+  <text x="909" y="936" text-anchor="middle" font-size="10" fill="#C2185B">  Scheduled Stop</text>
+
+  <!-- EB → Lambda arrows -->
+  <line x1="661" y1="946" x2="720" y2="994" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr-pink)"/>
+  <line x1="909" y1="946" x2="850" y2="994" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr-pink)"/>
+  <text x="785" y="982" text-anchor="middle" font-size="12" fill="#AD1457" font-weight="600">triggers</text>
+
+  <!-- Lambda -->
+  <rect x="556" y="996" width="458" height="90" rx="10" fill="#FFF3E0" stroke="#F57C00" stroke-width="1.8" filter="url(#shadow-sm)"/>
+  <text x="785" y="1034" text-anchor="middle" font-size="13" font-weight="700" fill="#E65100">AWS Lambda</text>
+  <text x="785" y="1054" text-anchor="middle" font-size="11" fill="#BF360C"> Updates ASG Capacity &amp; Starts/Stops RDS</text>
+  <rect x="668" y="1076" width="234" height="5" rx="3" fill="#FFE0B2"/>
+
+  <!-- Lambda → EC2 (left-side path) -->
+  <path d="M556,1070 L20,1070 L20,490 L75,490"
+        fill="none" stroke="#7B1FA2" stroke-width="1.3" stroke-dasharray="5 4"
+        marker-end="url(#arr-purple)"/>
+
+  <!-- Lambda → RDS (further left path) -->
+  <path d="M557,1080 L10,1085 L10,719 L410,720"
+        fill="none" stroke="#1565C0" stroke-width="1.3" stroke-dasharray="5 4"
+        marker-end="url(#arr-navy)"/>
+
+  <text 
+  x="98%" 
+  y="94%" 
+  text-anchor="end" 
+  font-size="15" 
+  fill="#888888" 
+  opacity="10" 
+  font-family="Arial, sans-serif">
+  github.com/pnakule
+</text>
+
+</svg>
+
+  
