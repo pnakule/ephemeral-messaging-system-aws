@@ -13,9 +13,9 @@ def get_param(name, decrypt=False):
     )["Parameter"]["Value"]
 
 DB_CONFIG = {
-    "host": get_param("/myapp/db_host"),
-    "user": get_param("/myapp/db_user"),
-    "password": get_param("/myapp/db_password", decrypt=True),
-    "database": get_param("/myapp/db_name"),
+    "host": get_param("/ephemeral/db/host"),
+    "user": get_param("/ephemeral/db/user"),
+    "password": get_param("/ephemeral/db/password", decrypt=True),
+    "database": get_param("/ephemeral/db/name"),
     "port": 3306,
 }
