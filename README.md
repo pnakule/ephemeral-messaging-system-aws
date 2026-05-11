@@ -46,7 +46,70 @@ Users can create secret messages, share links, and messages disappear after one 
 
 ---
 
-## Cost Breakdown
+## Cost Breakdown (Estimated Monthly Cost for 30 Days)
+
+> Note  
+> These cost estimates are based on my current demo setup with assumed low traffic and limited daily runtime in the us-east-1 region.  
+> Actual AWS cost may change depending on traffic, usage, and infrastructure changes.
+
+---
+
+### Application Load Balancer (ALB)
+
+| Component | Estimated Monthly Cost |
+|---|---|
+| ALB Runtime (24/7 Running) | ~$16.20 |
+| LCU Usage (Assumed Low Traffic) | ~$0.10–0.30 |
+| Total Estimated Cost | ~$16–17/month |
+
+> ALB remains active 24/7 and cannot be stopped like EC2 or RDS instances.
+
+---
+
+### Amazon EC2
+
+| Component | Estimated Monthly Cost |
+|---|---|
+| t3.micro Runtime (1 Hour Daily) | ~$0.31 |
+| 8 GiB gp3 Storage | ~$0.64 |
+| Total Estimated Cost | ~$0.95/month |
+
+> EC2 runtime cost is reduced using scheduled infrastructure automation.
+
+---
+
+### Amazon RDS (MySQL)
+
+| Component | Estimated Monthly Cost |
+|---|---|
+| db.t4g.micro Runtime (1 Hour Daily) | ~$0.48 |
+| gp3 Storage (20 GiB) | ~$2.30 |
+| Automated Backups Disabled (Retention Period: 0) | $0 |
+| Total Estimated Cost | ~$2.8/month |
+
+> RDS storage charges continue even when the database instance is stopped.
+
+---
+
+### Amazon Route 53
+
+| Component | Estimated Monthly Cost |
+|---|---|
+| Hosted Zone | ~$0.50 |
+| DNS Queries (Very Low Usage) | ~$0 |
+| Total Estimated Cost | ~$0.50/month |
+
+---
+
+> Other AWS services like S3, CloudFront, Lambda, and EventBridge currently generate very low cost due to low traffic and usage in this demo setup.
+
+---
+
+## Total Estimated Monthly Cost
+
+| Setup | Estimated Monthly Cost |
+|---|---|
+| Complete Architecture | ~$20–22/month |
 
 ## Future Improvemts
 - Add CI/CD pipeline to automatically deploy application updates from GitHub
