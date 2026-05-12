@@ -35,7 +35,7 @@
 
   <!-- TITLE -->
   <text x="530" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#1e1b4b">Ephemeral Messaging System — AWS Architecture</text>
-  <text x="530" y="72" text-anchor="middle" font-size="11" fill="#64748b">Secure one-time messaging application with automatic message expiration, HTTPS delivery, automated scaling, and failover architecture on AWS.</text>
+  <text x="530" y="72" text-anchor="middle" font-size="11" fill="#64748b">Secure one-time messaging application with automatic message expiration, HTTPS delivery, automated scaling architecture on AWS.</text>
 
   <!-- USER -->
   <rect x="405" y="90" width="250" height="50" rx="11" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow-sm)"/>
@@ -55,19 +55,19 @@
   <!-- CLOUDFRONT -->
   <rect x="370" y="235" width="312" height="72" rx="11" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1.5" filter="url(#shadow-sm)"/>
   <text x="530" y="258" text-anchor="middle" font-size="13" font-weight="700" fill="#4A148C">CloudFront</text>
-  <text x="530" y="276" text-anchor="middle" font-size="11" fill="#7B1FA2"> Edge  Routing  · HTTPS  ·  Origin Failover </text>
-  <text x="530" y="294" text-anchor="middle" font-size="10" fill="#9C27B0">Primary Origin: ALB  ·  Failover Origin: S3 </text>
+  <text x="530" y="276" text-anchor="middle" font-size="11" fill="#7B1FA2"> Edge Routing · HTTPS · Custom Error Fallback </text>
+  <text x="530" y="294" text-anchor="middle" font-size="10" fill="#9C27B0">Primary Origin: ALB · Fallback: S3 </text>
 
 
   <!-- CF → S3 failover arrow -->
   <path d="M681,272 L764,272" fill="none" stroke="#dc2626" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#arr-red)"/>
-  <text x="720" y="268" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">failover</text>
+  <text x="720" y="268" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">fallback</text>
 
   <!-- S3 -->
   <rect x="766" y="235" width="230" height="72" rx="11" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow-sm)"/>
   <text x="880" y="260" text-anchor="middle" font-size="13" font-weight="700" fill="#1B5E20">Amazon S3</text>
-    <text x="880" y="276" text-anchor="middle" font-size="11" fill="#2E7D32">Static Offline Page</text>
-  <text x="880" y="290" text-anchor="middle" font-size="11" fill="#2E7D32">Private Bucket via OAC</text>
+    <text x="880" y="276" text-anchor="middle" font-size="11" fill="#2E7D32">Offline Page</text>
+  <text x="880" y="290" text-anchor="middle" font-size="11" fill="#2E7D32">Private Bucket (OAC Enabled)</text>
 
   <!-- CF → ALB arrow -->
   <path d="M530,308 L530,361" fill="none" stroke="#7B1FA2" stroke-width="1.3" marker-end="url(#arr-purple)"/>
@@ -320,5 +320,7 @@
 </text>
 
 </svg>
+
+  
 
   
