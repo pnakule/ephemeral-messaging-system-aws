@@ -12,7 +12,7 @@ def restrict_access():
     if request.path == "/health":
         return
 
-    if request.headers.get("P-Origin-Verify") != "Ephemeral":
+    if request.headers.get("xxx") != "xxx":
         abort(403)
 
 # ── Database ──────────────────────────────────────────────────────────────────
