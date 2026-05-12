@@ -150,6 +150,4 @@ If the EC2 application becomes unavailable:
 | Route 53 Hosted Zone | ~$0.50 |
 | EC2 (Linux t3.micro) + EBS | ~$1–2 |
 
-### Estimated Total
-
 ~$2–3/month for low-traffic live demo usage.
