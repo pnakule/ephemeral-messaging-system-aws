@@ -1,16 +1,15 @@
 # Current Deployment Architecture Note
 
-The original architecture for this project was designed mainly for learning AWS service integration, end-to-end deployment flow, automation, and security practices. After deploying the project and calculating the actual AWS monthly cost (shown in the cost breakdown section), I redesigned the live deployment into a more cost-optimized architecture so the project could remain publicly accessible as a live demo. While this simplified deployment does not fully follow production-level best practices, it still maintains the core AWS integrations and operational workflows at a much lower cost.
+The original architecture for this project was designed mainly for learning AWS services integration, end-to-end deployment flow, automation, and security practices. After deploying the project and calculating the actual AWS monthly cost (shown in the cost breakdown section), I redesigned the live deployment into a more cost-optimized architecture so the project could remain publicly accessible as a live demo. While this simplified deployment does not fully follow production-level best practices, it still maintains the core AWS integrations and operational workflows at a much lower cost.
 
 The goal of this deployment was to:
 - reduce unnecessary AWS costs
 - keep the application live for demonstration
 - practice real-world AWS deployment workflows
-- practice real-world AWS deployment workflows
 - automate infrastructure operations
 - integrate multiple AWS services together
 
-This setup is mainly intended for learning and demonstration purposes and is not meant to represent a complete enterprise production architecture.
+This setup is mainly intended for learning and demonstration purposes.
 
 ---
 
@@ -25,7 +24,7 @@ Automation:
 EventBridge → Lambda → EC2 Start/Stop + Route53 Dynamic DNS Update
 
 Security:
-SSM Session Manager + Parameter Store + OAC
+IAM + SSM Session Manager + Parameter Store + OAC
 
 
 # Current Live Detailed Deployment Flow
@@ -150,3 +149,7 @@ If the EC2 application becomes unavailable:
 |---|---|
 | Route 53 Hosted Zone | ~$0.50 |
 | EC2 (Linux t3.micro) + EBS | ~$1–2 |
+
+### Estimated Total
+
+~$2–3/month for low-traffic live demo usage.
