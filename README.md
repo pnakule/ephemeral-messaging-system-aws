@@ -18,6 +18,9 @@ Users can create secret messages, share links, and messages disappear after one 
 > To reduce AWS cost, this infrastructure runs only for 1 hour daily using EventBridge + Lambda automation.  
 > Because of this, generated links may not work outside the scheduled runtime window.
 
+> The live deployment architecture used for this demo was redesigned for cost optimization and operational learning.  
+> Detailed deployment notes are available in [LIVE-ARCHITECTURE.md](LIVE-ARCHITECTURE.md).
+
 ---
 
 ## Architecture Diagram
