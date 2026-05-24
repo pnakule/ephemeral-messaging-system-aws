@@ -12,8 +12,8 @@ def restrict_access():
     if request.path == "/health":
         return
 
-    if request.headers.get("xxx") != "xxx":
-        abort(403)
+ #   if request.headers.get("xxx") != "xxx":
+ #      abort(403)
 
 # ── Database ──────────────────────────────────────────────────────────────────
 def get_db_connection():
